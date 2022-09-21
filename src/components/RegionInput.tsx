@@ -2,6 +2,10 @@
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import {
     Button,
+    Card,
+    CardActionArea,
+    CardContent,
+    Divider,
     Fade,
     IconButton,
     InputAdornment,
@@ -18,6 +22,7 @@ import { useState } from 'react';
 import dec from '../../public/dec.svg';
 import GalaxyIcon from '../../public/Galaxy_icon.svg';
 import ra from '../../public/ra.svg';
+import region_list from '../../public/region_list.json';
 import { Coordinate } from '../types';
 
 interface RegionInputProps {
@@ -114,6 +119,33 @@ export default function RegionInput({ onCoordinatesSet }: RegionInputProps) {
                 >
                     UGC 01962
                 </Button>
+            </Stack>
+
+            <Divider />
+
+            <Typography component='div' color={grey[500]}>
+                Otras regiones
+            </Typography>
+            <Stack spacing={0.5} maxHeight={400}>
+                {region_list.regions.map((region, i) => {
+                    return (
+                        <Card key={i}>
+                            <CardActionArea
+                                onClick={() =>
+                                    autoComplete(
+                                        { ra: region.ra1, dec: region.dec1 },
+                                        { ra: region.ra2, dec: region.dec2 },
+                                        i + 3,
+                                    )
+                                }
+                            >
+                                <CardContent sx={{ p: 1 }} color='white'>
+                                    <Typography component='div'>{region.name}</Typography>
+                                </CardContent>
+                            </CardActionArea>
+                        </Card>
+                    );
+                })}
             </Stack>
         </Stack>
     );

@@ -93,12 +93,16 @@ function LoadingMessage() {
         'Buscando regiones de interés',
         'Filtrando regiones de interés',
         'Clasificando',
-        'Construyendo el resultado',
+        'Construyendo el resultado...',
     ];
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            setMessageIndex((currentIndex) => (currentIndex + 1) % messages.length);
+            if (messageIndex === messages.length - 2) {
+                clearInterval(intervalId);
+            } else {
+                setMessageIndex((currentIndex) => currentIndex + 1);
+            }
         }, 2000);
 
         return () => {
